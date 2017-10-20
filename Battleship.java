@@ -8,7 +8,15 @@ class Battleship{
       int hitcount1=0;
       int hitcount2=0;
       int []coordinates =new int[2];
-   
+      
+      //GUI
+      BattleshipGUI frame=new BattleshipGUI();
+      frame.setTitle("Battleship");
+      frame.setSize(750, 500);
+      frame.setResizable(true);
+      frame.setLocation(50, 50);
+      frame.setVisible(true);
+
       System.out.println ("Game Start!");
       System.out.println ("-------------------------------");
 
@@ -37,6 +45,7 @@ class Battleship{
       
       //Gamestart
       //The game is played till all ships of one player are destroyed
+      Mainloop:
       while (hitcount1 != shipnumber && hitcount2 != shipnumber) {
 
            //Player 1 shoots first
@@ -45,6 +54,10 @@ class Battleship{
            hitcount1=hitcount1+shotresult;
            player1.recordOnRadarMap(shotresult,coordinates);
            player1.printRadarMap();
+           
+           //Break early if P1 manages to destroy all of the enemy's forces
+           if(hitcount1 == shipnumber)
+               break Mainloop;
 
            //Player 2 shoots second
            coordinates=player2.shot();
